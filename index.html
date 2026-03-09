@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Watson Melo 75428</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      background-color: white;
+      padding: 30px;
+      border-radius: 14px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #1e3a8a;
+      font-size: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #1f2937;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+    }
+
+    .error {
+      color: #dc2626;
+      font-size: 14px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .input-error {
+      border-color: #dc2626;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background-color: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-submit:hover {
+      background-color: #1d4ed8;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      color: #166534;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 20px;
+      background-color: #dcfce7;
+      border: 2px solid #22c55e;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <form id="loginForm">
+      <h1>Student Login</h1>
+
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" />
+        <p class="error" id="firstNameError">Please enter your first name.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" />
+        <p class="error" id="lastNameError">Please enter your last name.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" id="email" />
+        <p class="error" id="emailError">Please enter a valid email address.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" />
+        <p class="error" id="passwordError">Password must be at least 6 characters long.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="studentId">Student ID</label>
+        <input type="text" id="studentId" />
+        <p class="error" id="studentIdError">Student ID must contain only numbers.</p>
+      </div>
+
+      <button type="submit" class="btn-submit">Login</button>
+    </form>
+
+    <div class="success-message" id="successMessage">
+      Login successful!
+    </div>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const successMessage = document.getElementById("successMessage");
+
+    const firstName = document.getElementById("firstName");
+    const lastName = document.getElementById("lastName");
+    const email = document.getElementById("email");
+    const password = document.getElementById("password");
+    const studentId = document.getElementById("studentId");
+
+    const firstNameError = document.getElementById("firstNameError");
+    const lastNameError = document.getElementById("lastNameError");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
+    const studentIdError = document.getElementById("studentIdError");
+
+    function showError(input, errorElement) {
+      input.classList.add("input-error");
+      errorElement.style.display = "block";
+    }
+
+    function hideError(input, errorElement) {
+      input.classList.remove("input-error");
+      errorElement.style.display = "none";
+    }
+
+    function isValidEmail(emailValue) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
+    }
+
+    function isValidStudentId(studentIdValue) {
+      return /^[0-9]+$/.test(studentIdValue);
+    }
+
+    loginForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      let isFormValid = true;
+
+      if (firstName.value.trim() === "") {
+        showError(firstName, firstNameError);
+        isFormValid = false;
+      } else {
+        hideError(firstName, firstNameError);
+      }
+
+      if (lastName.value.trim() === "") {
+        showError(lastName, lastNameError);
+        isFormValid = false;
+      } else {
+        hideError(lastName, lastNameError);
+      }
+
+      if (email.value.trim() === "" || !isValidEmail(email.value.trim())) {
+        showError(email, emailError);
+        isFormValid = false;
+      } else {
+        hideError(email, emailError);
+      }
+
+      if (password.value.trim() === "" || password.value.trim().length < 6) {
+        showError(password, passwordError);
+        isFormValid = false;
+      } else {
+        hideError(password, passwordError);
+      }
+
+      if (studentId.value.trim() === "" || !isValidStudentId(studentId.value.trim())) {
+        showError(studentId, studentIdError);
+        isFormValid = false;
+      } else {
+        hideError(studentId, studentIdError);
+      }
+
+      if (isFormValid) {
+        loginForm.reset();
+
+        hideError(firstName, firstNameError);
+        hideError(lastName, lastNameError);
+        hideError(email, emailError);
+        hideError(password, passwordError);
+        hideError(studentId, studentIdError);
+
+        loginForm.style.display = "none";
+        successMessage.style.display = "block";
+      }
+    });
+  </script>
+
+</body>
+</html>
